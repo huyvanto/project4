@@ -87,14 +87,8 @@ functions:
           path: todos
           cors: true
           authorizer: Auth
-          reqValidatorName: RequestBodyValidator
-          documentation:
-            summary: Create a new todo item
-            description: Create a new todo item
-            requestModels:
-              'application/json': CreateTodoRequest
           request:
-            schema:
+            schemas:
               application/json: ${file(models/create-todo-model.json)}
     iamRoleStatements:
       - Effect: Allow
@@ -122,15 +116,9 @@ functions:
           method: patch
           path: todos/{todoId}
           authorizer: Auth
-          cors: true
-          reqValidatorName: RequestBodyValidator
-          documentation:
-            summary: Update a todo item
-            description: Update a todo item
-            requestModels:
-              'application/json': UpdateTodoRequest        
+          cors: true      
           request:
-            schema:
+            schemas:
               application/json: ${file(models/update-todo-model.json)}
     iamRoleStatements:
       - Effect: Allow
@@ -208,15 +196,6 @@ functions:
 
 resources:
   Resources:
-    RequestBodyValidator:
-      Type: AWS::ApiGateway::RequestValidator
-      Properties:
-        Name: 'request-body-validator'
-        RestApiId:
-          Ref: ApiGatewayRestApi
-        ValidateRequestBody: true
-        ValidateRequestParameters: false
-
     # Add necessary AWS resources. You will need at least the following AWS resources
     # TODO: Fill the properties
     # Feel free to change the names as you like. 
